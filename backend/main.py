@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import json, random
+import os
 
 try:
     from .rag import build_index, search
@@ -82,4 +83,5 @@ def shortlist(session_id: str):
 # -------- RUN --------
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000)
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
