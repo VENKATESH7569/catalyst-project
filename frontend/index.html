@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Talent Agent</title>
+<style>
+body {font-family:Arial;background:#0f172a;color:white;padding:20px;}
+textarea{width:100%;padding:10px;margin:5px 0;}
+button{padding:10px;background:#38bdf8;border:none;cursor:pointer;}
+.card{background:#1e293b;padding:10px;margin:10px 0;border-radius:10px;}
+</style>
+</head>
+
+<body>
+
+<h1>AI Talent Agent</h1>
+
+<textarea id="jd" placeholder="Paste JD"></textarea>
+<button onclick="find()">Find Candidates</button>
+
+<div id="candidates"></div>
+
+<h3>Ranking</h3>
+<button onclick="rank()">Get Ranking</button>
+<div id="rank"></div>
+
+<script>
+let session_id="";
+
+async function find(){
+ let jd=document.getElementById("jd").value;
+ let res=await fetch("/parse-jd",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({jd_text:jd})
+ });
+ let data=await res.json();
+ session_id=data.session_id;
+
+ let html="";
+ data.candidates.forEach(c=>{
+  html+=`<div class="card">${c.name} | Match: ${c.match_score}</div>`;
+ });
+ document.getElementById("candidates").innerHTML=html;
+}
+
+async function rank(){
+ if (!session_id) {
+  document.getElementById("rank").innerHTML =
+  `<div class="card">Find candidates first, then get ranking.</div>`;
+  return;
+ }
+
+ let res=await fetch(`/shortlist/${session_id}`);
+ let data=await res.json();
+ let html="";
+ data.shortlist.forEach(c=>{
+  html+=`<div class="card">${c.name} | Final: ${c.final_score}</div>`;
+ });
+ document.getElementById("rank").innerHTML=html;
+}
+</script>
+
+</body>
+</html>

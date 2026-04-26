@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Rahul",
+    "skills": ["Python", "NLP", "ML"],
+    "experience": 2
+  },
+  {
+    "id": "2",
+    "name": "Anjali",
+    "skills": ["React", "Node", "SQL"],
+    "experience": 3
+  },
+  {
+    "id": "3",
+    "name": "Kiran",
+    "skills": ["Python", "Data Science"],
+    "experience": 1
+  },
+  {
+    "id": "4",
+    "name": "Sneha",
+    "skills": ["Deep Learning", "NLP"],
+    "experience": 2
+  }
+]
