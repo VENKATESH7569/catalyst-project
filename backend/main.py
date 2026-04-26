@@ -4,7 +4,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import json, random
-from rag import build_index, search
+
+try:
+    from .rag import build_index, search
+except ImportError:
+    from rag import build_index, search
 
 BASE_DIR = Path(__file__).resolve().parent
 FRONTEND_INDEX = BASE_DIR.parent / "frontend" / "index.html"
